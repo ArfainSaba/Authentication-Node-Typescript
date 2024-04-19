@@ -2,7 +2,11 @@ import { Request, Response } from 'express';
 import { Sequelize } from 'sequelize';
 import OTP from '../models/otpModels';
 import {v4 as uuidv4 } from 'uuid'
+import dotenv from 'dotenv';
 
+dotenv.config();
+
+const expiringTime = parseInt( process.env.OTP_EXPIRE_TIME)
 function isNumeric(value: any): boolean {
   return /^\d+$/.test(value);
 }
@@ -72,7 +76,7 @@ export async function generateOTP(req: Request, res: Response, sequelize: Sequel
      }
     
         const expiryTime = new Date();
-        expiryTime.setMinutes(expiryTime.getMinutes() + 5);
+        expiryTime.setMinutes(expiryTime.getMinutes() +expiringTime);
     
         const newOTP = await OTP.create({
           id: uuidv4(), 
@@ -81,6 +85,8 @@ export async function generateOTP(req: Request, res: Response, sequelize: Sequel
           created_at: new Date(), 
           expires_at: expiryTime,
         });
+
+        newOTP.save();
 
         res.status(200).json({
           id:"api.otp.generate",
@@ -138,7 +144,6 @@ export async function regenerateOTP(req: Request, res: Response, sequelize: Sequ
     });
         }
         const currentTime= new Date();
-        // const remainingTime= existingOTP.expires_at.getTime()-currentTime.getTime();
         const remainingMilliseconds = existingOTP.expires_at.getTime() - currentTime.getTime();
         const remainingMinutes = Math.floor(remainingMilliseconds / (1000 * 60));
         const remainingSeconds = Math.floor((remainingMilliseconds % (1000 * 60)) / 1000);
