@@ -2,10 +2,9 @@ import { Sequelize, DATE,STRING,NOW,DataTypes,Model, UUID } from 'sequelize';
 import { v4 as UUIDV4 } from 'uuid';
 import dotenv from 'dotenv';
 
+import sequelize from "../database/db";
+
 dotenv.config();
-const sequelize = new Sequelize(process.env.TABLE, process.env.DB_NAME, process.env.POSTGRES_PASSWORD, {
-    dialect: 'postgres',
-  });
 
 interface OTPModel{
     id: string;
