@@ -3,6 +3,7 @@ import { v4 as UUIDV4 } from 'uuid';
 import dotenv from 'dotenv';
 
 import sequelize from "../database/db";
+// import { NUMBER } from 'sequelize';
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ interface OTPModel{
     country_code: string;
     created_at: Date;
     expires_at: Date;
+    otp:number;
   }
 
   interface OTPInstance extends Model<OTPModel,OTPModel>, OTPModel {}
@@ -38,5 +40,10 @@ interface OTPModel{
       type: DATE,
       allowNull: false,
     },
+    otp:{
+      type:DataTypes.INTEGER,
+      allowNull:false,
+
+    }
   }) ;
   export default OTP;

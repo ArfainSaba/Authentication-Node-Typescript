@@ -6,8 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-// Define your Sequelize instance and connection parameters
-const sequelize = new sequelize_1.Sequelize("otp_details", "postgres", "arfainsabapostgres", {
+const sequelize = new sequelize_1.Sequelize(process.env.TABLE, process.env.DB_NAME, process.env.POSTGRES_PASSWORD, {
     dialect: 'postgres',
 });
 exports.default = sequelize;

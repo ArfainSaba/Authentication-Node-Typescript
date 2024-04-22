@@ -6,11 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const uuid_1 = require("uuid");
 const dotenv_1 = __importDefault(require("dotenv"));
+const db_1 = __importDefault(require("../database/db"));
+// import { NUMBER } from 'sequelize';
 dotenv_1.default.config();
-const sequelize = new sequelize_1.Sequelize(process.env.TABLE, process.env.DB_NAME, process.env.POSTGRES_PASSWORD, {
-    dialect: 'postgres',
-});
-const OTP = sequelize.define('OTP', {
+const OTP = db_1.default.define('OTP', {
     id: {
         type: sequelize_1.UUID,
         primaryKey: true,
@@ -32,6 +31,10 @@ const OTP = sequelize.define('OTP', {
         type: sequelize_1.DATE,
         allowNull: false,
     },
+    otp: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
+    }
 });
 exports.default = OTP;
 //# sourceMappingURL=otpModels.js.map

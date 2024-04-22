@@ -13,18 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const body_parser_1 = __importDefault(require("body-parser"));
 const otpServices_1 = require("./services/otpServices");
-const db_1 = __importDefault(require("./database/db"));
+const PORT = process.env.PORT || 3001;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-app.use(body_parser_1.default.urlencoded({ extended: false }));
-// const sequelize = new Sequelize(process.env.TABLE, process.env.DB_NAME, process.env.POSTGRES_PASSWORD, {
-//   dialect: 'postgres',
-// });
-app.post('/v1/otp/generate', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return (0, otpServices_1.generateOTP)(req, res, db_1.default); }));
-app.get('/v1/otp/regenerate/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return (0, otpServices_1.regenerateOTP)(req, res, db_1.default); }));
-const PORT = process.env.PORT || 3000;
+app.post('/v1/otp/generate', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return (0, otpServices_1.generateOTP)(req, res); }));
+app.get('/v1/otp/regenerate/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return (0, otpServices_1.regenerateOTP)(req, res); }));
+app.post('/v1/otp/verify', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return (0, otpServices_1.verifyOTP)(req, res); }));
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
