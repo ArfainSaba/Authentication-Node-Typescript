@@ -84,7 +84,6 @@ export async function generateOTP(req: Request, res: Response) {
       },
       responseCode: "OK",
       result: {
-        otp: otp,
         id: newOTP.id
       }
     });
