@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import OTP from '../models/otpModels';
 import { v4 as uuidv4 } from 'uuid';
 import dotenv from 'dotenv';
-import sequelize from '../database/db';
 import { Op } from 'sequelize';
 dotenv.config();
 
@@ -161,7 +160,6 @@ export async function regenerateOTP(req: Request, res: Response) {
       id: "api.otp.regenerate",
       createdAt: currentTime,
       expiresAt: expiryTime,
-      otp:newOTP,
       params: {
         err: null,
         status: "Success",
